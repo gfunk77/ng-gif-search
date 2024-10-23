@@ -1,0 +1,5 @@
+<input type="text" #search (keyup.enter)="searchTerm.emit(search.value)" />
+<div class="buttons">
+  <button (click)="previous.emit()">Next page</button>
+  <button (click)="next.emit()">Next page</button>
+</div>
