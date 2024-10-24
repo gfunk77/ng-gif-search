@@ -1,0 +1,16 @@
+<app-search
+  (searchTerm)="lookup($event)"
+  (next)="nextPage()"
+  (previous)="prevPage()"
+></app-search>
+
+<div *ngIf="results$ | async as results">
+  <div class="grid">
+    @for (result of results; track $index) {
+    <a routerLink="/details">
+      <app-image [image]="result.image"></app-image>
+    </a>
+
+    }
+  </div>
+</div>

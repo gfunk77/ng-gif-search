@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { GiphyResponse } from './models';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,13 +10,16 @@ import { map, Observable, tap } from 'rxjs';
 export class CollegeService {
   http = inject(HttpClient);
 
-  search(searchTerm: string, offset = 0): Observable<any> {
-    return this.http.get('https://api.giphy.com/v1/gifs/search', {
-      params: {
-        api_key: '6EVcVP3DXqZEg9lFh9tuCUcdF41DLsgP',
-        q: searchTerm,
-        offset: `${offset}`,
-      },
-    });
+  search(searchTerm: string, offset = 0): Observable<GiphyResponse> {
+    return this.http.get<GiphyResponse>(
+      'https://api.giphy.com/v1/gifs/search',
+      {
+        params: {
+          api_key: environment.api_key,
+          q: searchTerm,
+          offset: `${offset}`,
+        },
+      }
+    );
   }
 }

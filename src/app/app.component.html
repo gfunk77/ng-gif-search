@@ -1,15 +1,1 @@
-<app-search
-  (searchTerm)="lookup($event)"
-  (next)="nextPage()"
-  (previous)="prevPage()"
-></app-search>
-
-@if (images$ | async; as images) {
-<div class="grid">
-  @for (image of images; track $index) {
-  <app-image [image]="image"></app-image>
-  }
-</div>
-}
-
 <router-outlet />
