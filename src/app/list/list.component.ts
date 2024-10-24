@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ImageComponent } from '../image/image.component';
 import { map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { Gif, GiphyResponse } from '../models';
@@ -16,37 +16,37 @@ import { RouterLink } from '@angular/router';
 })
 export class ListComponent {
   collegeService = inject(CollegeService);
-  page = 0;
-  private pageChange = new Subject<number>();
-  results$!: Observable<Gif[]>;
-  searchTerm = '';
 
-  ngOnInit(): void {
-    this.results$ = this.pageChange.pipe(
-      switchMap((page) => this.collegeService.search(this.searchTerm, page)),
-      tap((resp) => console.log(resp.data)),
+  page = signal(0);
+  searchTerm = signal('');
+  results = computed(() => {
+    const term = this.searchTerm();
+    const page = this.page();
+    return this.collegeService.search(term, page).pipe(
       map((resp: GiphyResponse) =>
-        resp.data.map((d: any) => ({
-          image: d.images.fixed_width.url,
-          title: d.title,
-          rating: d.rating,
+        resp.data.map((item: any) => ({
+          image: item.images.fixed_width.url,
+          title: item.title,
+          rating: item.rating,
         }))
       )
     );
+  });
+
+  ngOnInit(): void {
+    this.page.set(0);
   }
 
   lookup(search: string): void {
-    this.searchTerm = search;
-    this.pageChange.next(0);
+    this.searchTerm.set(search);
+    this.page.set(0);
   }
 
   nextPage(): void {
-    this.page += 50;
-    this.pageChange.next(this.page);
+    this.page.update((page) => page + 50);
   }
 
   prevPage(): void {
-    if (this.page > 0) this.page -= 50;
-    this.pageChange.next(this.page);
+    this.page.update((page) => (page > 0 ? page - 50 : 0));
   }
 }

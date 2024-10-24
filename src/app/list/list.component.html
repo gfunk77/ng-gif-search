@@ -4,7 +4,7 @@
   (previous)="prevPage()"
 ></app-search>
 
-<div *ngIf="results$ | async as results">
+<div *ngIf="results() | async as results">
   <div class="grid">
     @for (result of results; track $index) {
     <a routerLink="/details">
