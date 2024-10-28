@@ -12,6 +12,8 @@ You can select a gif which will take you to an un-finished details page but the 
 
 There are two branches: main and signals. Main uses **RxJs** to implement the search and pagination where signals uses a **Signals** based approach without RxJs.
 
+In the signals branch, the results of the search are cached. When the user goes back to a previous page, there will not be another api call. This is not implemented in main.
+
 ### Misc Info
 
 The signal branch has some basic bootstrap styling. The next/prev buttons will appear only after you make an initial search.
