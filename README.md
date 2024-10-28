@@ -1,6 +1,22 @@
-# College
+# gif-search
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
+
+### Functionality
+
+gif-search is a simple application which populates a list of gifs based on a search term and implements pagination so that you can turn pages to see more results.
+
+You can select a gif which will take you to an un-finished details page but the functionality stops there. I just wanted to showcase two ways to setup search and pagination functionality - RxJs and Signals.
+
+### Variations
+
+There are two branches: main and signals. Main uses **RxJs** to implement the search and pagination where signals uses a **Signals** based approach without RxJs.
+
+### Misc Info
+
+The signal branch has some basic bootstrap styling.
+
+Then main branch is not styled.
 
 ## Development server
 
