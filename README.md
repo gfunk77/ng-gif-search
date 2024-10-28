@@ -14,7 +14,7 @@ There are two branches: main and signals. Main uses **RxJs** to implement the se
 
 ### Misc Info
 
-The signal branch has some basic bootstrap styling.
+The signal branch has some basic bootstrap styling. The next/prev buttons will appear only after you make an initial search.
 
 Then main branch is not styled.
 
