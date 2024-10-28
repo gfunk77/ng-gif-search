@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ImageComponent } from '../image/image.component';
 import { map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { Gif, GiphyResponse } from '../models';
-import { CollegeService } from '../college.service';
+import { GifService } from '../gif.service';
 import { SearchComponent } from '../search/search.component';
 import { RouterLink } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  collegeService = inject(CollegeService);
+  gifService = inject(GifService);
   page = 0;
   private pageChange = new Subject<number>();
   results$!: Observable<Gif[]>;
@@ -23,7 +23,7 @@ export class ListComponent {
 
   ngOnInit(): void {
     this.results$ = this.pageChange.pipe(
-      switchMap((page) => this.collegeService.search(this.searchTerm, page)),
+      switchMap((page) => this.gifService.search(this.searchTerm, page)),
       tap((resp) => console.log(resp.data)),
       map((resp: GiphyResponse) =>
         resp.data.map((d: any) => ({
