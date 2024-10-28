@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { CollegeService } from './college.service';
+import { GifService } from './gif.service';
 import { map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { SearchComponent } from './search/search.component';
 import { ImageComponent } from './image/image.component';

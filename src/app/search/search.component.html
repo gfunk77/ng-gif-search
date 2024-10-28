@@ -1,5 +1,30 @@
-<input type="text" #search (keyup.enter)="searchTerm.emit(search.value)" />
-<div class="buttons">
-  <button (click)="previous.emit()">Next page</button>
-  <button (click)="next.emit()">Next page</button>
+<div class="row">
+  <div class="col input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search..."
+      aria-label="Search..."
+      aria-describedby="button-addon2"
+      #search
+      [(ngModel)]="word"
+      (keyup.enter)="searchInput(search.value)"
+    />
+    <button
+      (click)="searchInput(search.value)"
+      class="btn btn-primary"
+      type="button"
+      id="button-addon2"
+    >
+      Search
+    </button>
+  </div>
 </div>
+@if (hasResults()) {
+<div class="col buttons">
+  <button class="btn btn-primary me-2" (click)="previous.emit()">
+    Previous page
+  </button>
+  <button class="btn btn-primary" (click)="next.emit()">Next page</button>
+</div>
+}

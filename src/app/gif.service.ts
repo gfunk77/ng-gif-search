@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class CollegeService {
+export class GifService {
   http = inject(HttpClient);
 
   search(searchTerm: string, offset = 0): Observable<GiphyResponse> {

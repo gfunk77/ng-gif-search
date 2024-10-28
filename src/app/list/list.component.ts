@@ -3,9 +3,10 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ImageComponent } from '../image/image.component';
 import { map, Observable, Subject, switchMap, tap } from 'rxjs';
 import { Gif, GiphyResponse } from '../models';
-import { CollegeService } from '../college.service';
+import { GifService } from '../gif.service';
 import { SearchComponent } from '../search/search.component';
 import { RouterLink } from '@angular/router';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-list',
@@ -15,38 +16,30 @@ import { RouterLink } from '@angular/router';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  collegeService = inject(CollegeService);
+  gifService = inject(GifService);
+  stateService = inject(StateService);
 
-  page = signal(0);
-  searchTerm = signal('');
-  results = computed(() => {
-    const term = this.searchTerm();
-    const page = this.page();
-    return this.collegeService.search(term, page).pipe(
-      map((resp: GiphyResponse) =>
-        resp.data.map((item: any) => ({
-          image: item.images.fixed_width.url,
-          title: item.title,
-          rating: item.rating,
-        }))
-      )
-    );
-  });
+  page = this.stateService.page;
+  searchTerm = this.stateService.searchTerm;
+  results = this.stateService.results;
+  showButtons = computed(() => this.results().length > 0);
+  title = signal('Giphy Search');
 
   ngOnInit(): void {
-    this.page.set(0);
+    if (this.searchTerm()) {
+      this.stateService.fetchResults();
+    }
   }
 
   lookup(search: string): void {
-    this.searchTerm.set(search);
-    this.page.set(0);
+    this.stateService.lookup(search);
   }
 
   nextPage(): void {
-    this.page.update((page) => page + 50);
+    this.stateService.nextPage();
   }
 
   prevPage(): void {
-    this.page.update((page) => (page > 0 ? page - 50 : 0));
+    this.stateService.prevPage();
   }
 }

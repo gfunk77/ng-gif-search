@@ -1,16 +1,25 @@
 <app-search
+  [hasResults]="showButtons()"
   (searchTerm)="lookup($event)"
   (next)="nextPage()"
   (previous)="prevPage()"
 ></app-search>
 
-<div *ngIf="results() | async as results">
-  <div class="grid">
-    @for (result of results; track $index) {
+<div class="row my-3" *ngIf="results() as results">
+  @for (result of results; track $index) {
+  <div class="col-sm-4 mb-3">
     <a routerLink="/details">
       <app-image [image]="result.image"></app-image>
     </a>
-
-    }
   </div>
+  }
+</div>
+
+<div
+  *ngIf="results().length === 0"
+  class="d-flex justify-content-center align-items-center full-height"
+>
+  <h2 class="text-center">
+    {{ title() | uppercase }}
+  </h2>
 </div>
